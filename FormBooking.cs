@@ -22,19 +22,111 @@ namespace HotelManagementSystem
 {
     public partial class FormBooking : Form
     {
+        // Feature: Provides real-time visual error indicators for input fields
+        private ErrorProvider errorProvider = new ErrorProvider();
+
         public FormBooking()
         {
             InitializeComponent();
         }
 
-        // Feature: Initializes default UI state, populating available rooms and setting base check-in/out dates.
+        // Feature: Initializes default UI state, restricts dates, and binds event handlers
         private void FormBooking_Load(object sender, EventArgs e)
         {
             LoadBookingsGrid();
             LoadAvailableRoomsComboBox();
+
+            // Feature: Restricts the calendar selection to the current day and future days only
+            dtpCheckIn.MinDate = DateTime.Today;
+            dtpCheckOut.MinDate = DateTime.Today;
+
             dtpCheckIn.Value = DateTime.Today;
             dtpCheckOut.Value = DateTime.Today.AddDays(1);
+
+            // Auto-populate guest details if ID exists
             txtGuestId.TextChanged += txtGuestId_TextChanged;
+
+            // Initialize real-time validation and calculation listeners
+            InitializeValidationEvents();
+
+            // Trigger the initial cost calculation to populate txtTotalAmount right away
+            CalculateCostEvent(null, null);
+        }
+
+        // Feature: Subscribes UI controls to validation and calculation events for immediate feedback
+        private void InitializeValidationEvents()
+        {
+            txtGuestId.TextChanged += (s, e) => ValidateGuestId();
+            txtGuestName.TextChanged += (s, e) => ValidateGuestName();
+            txtGuestPhone.TextChanged += (s, e) => ValidateGuestPhone();
+
+            // Feature: Dynamically recalculates total cost whenever dates or room selection change
+            dtpCheckIn.ValueChanged += (s, e) =>
+            {
+                // Forward-thinking safeguard: Automatically push check-out date forward if check-in surpasses it
+                if (dtpCheckOut.Value <= dtpCheckIn.Value)
+                {
+                    dtpCheckOut.Value = dtpCheckIn.Value.AddDays(1);
+                }
+                CalculateCostEvent(s, e);
+            };
+
+            dtpCheckOut.ValueChanged += CalculateCostEvent;
+            cmbRooms.SelectedIndexChanged += CalculateCostEvent;
+        }
+
+        // Feature: Validates Guest ID format in real-time
+        private bool ValidateGuestId()
+        {
+            string guestId = txtGuestId.Text.Trim();
+            if (string.IsNullOrEmpty(guestId))
+            {
+                errorProvider.SetError(txtGuestId, "Guest ID is required.");
+                return false;
+            }
+            if (!System.Text.RegularExpressions.Regex.IsMatch(guestId, @"^ID-\d{4}$", System.Text.RegularExpressions.RegexOptions.IgnoreCase))
+            {
+                errorProvider.SetError(txtGuestId, "Strict format required: ID-0000 (e.g. ID-1234).");
+                return false;
+            }
+            errorProvider.SetError(txtGuestId, "");
+            return true;
+        }
+
+        // Feature: Validates Guest Name for invalid characters in real-time
+        private bool ValidateGuestName()
+        {
+            string guestName = txtGuestName.Text.Trim();
+            if (string.IsNullOrEmpty(guestName))
+            {
+                errorProvider.SetError(txtGuestName, "Guest Name is required.");
+                return false;
+            }
+            if (!System.Text.RegularExpressions.Regex.IsMatch(guestName, @"^[a-zA-Z\s]+$"))
+            {
+                errorProvider.SetError(txtGuestName, "Numbers and special characters are not allowed.");
+                return false;
+            }
+            errorProvider.SetError(txtGuestName, "");
+            return true;
+        }
+
+        // Feature: Validates Phone Number using existing Philippine format rules in real-time
+        private bool ValidateGuestPhone()
+        {
+            string guestPhone = txtGuestPhone.Text?.Trim() ?? "";
+            if (string.IsNullOrEmpty(guestPhone))
+            {
+                errorProvider.SetError(txtGuestPhone, "Guest Phone is required.");
+                return false;
+            }
+            if (!IsValidPhilippinePhone(guestPhone))
+            {
+                errorProvider.SetError(txtGuestPhone, "Invalid Philippine phone number format.");
+                return false;
+            }
+            errorProvider.SetError(txtGuestPhone, "");
+            return true;
         }
 
         // Feature: Auto-populates guest details if an existing guest ID is entered.
@@ -125,39 +217,20 @@ namespace HotelManagementSystem
         // Feature: Validates all inputs and commits a new reservation transaction to the database, updating room status.
         private void btnBook_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtGuestId.Text) || string.IsNullOrEmpty(txtGuestName.Text) || cmbRooms.SelectedItem == null)
+            // Feature: Executes instantaneous validation checks before permitting a database transaction
+            bool isGuestIdOk = ValidateGuestId();
+            bool isGuestNameOk = ValidateGuestName();
+            bool isGuestPhoneOk = ValidateGuestPhone();
+
+            if (!isGuestIdOk || !isGuestNameOk || !isGuestPhoneOk || cmbRooms.SelectedItem == null)
             {
-                MessageBox.Show("Please complete all fields.", "Validation Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Input Validation Failed! Please correct the fields marked with red error icons before booking.", "Validation Alert", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             string guestId = txtGuestId.Text.Trim();
             string guestName = txtGuestName.Text.Trim();
-            string guestPhone = txtGuestPhone.Text?.Trim() ?? "";
-
-            // Validate Guest ID matches strict ID-0000 format
-            if (!System.Text.RegularExpressions.Regex.IsMatch(guestId, @"^ID-\d{4}$", System.Text.RegularExpressions.RegexOptions.IgnoreCase))
-            {
-                MessageBox.Show("Invalid Guest ID Format: Guest ID must follow the strict format of ID-0000 (e.g. ID-1234, ID-0045, etc.).", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            // Validate Guest Name does not allow numbers or special characters
-            if (!System.Text.RegularExpressions.Regex.IsMatch(guestName, @"^[a-zA-Z\s]+$"))
-            {
-                MessageBox.Show("Invalid Guest Name: Numbers and special characters are not allowed in the Guest Full Name.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            // Validate Philippine phone number format matches our rules
-            if (!IsValidPhilippinePhone(guestPhone))
-            {
-                MessageBox.Show("Invalid Phone Number Format: Please specify a valid Philippine mobile or landline phone number. Accepted formats include: - Mobile: 0917 - 123 - 4567, 09171234567, +63 917 123 4567 " +
-                    "- Landline: 02 - 8123 - 4567, 032 - 123 - 4567", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            guestPhone = FormatPhilippinePhone(guestPhone);
+            string guestPhone = FormatPhilippinePhone(txtGuestPhone.Text.Trim());
 
             // Extract room number
             string roomSel = cmbRooms.SelectedItem.ToString();
@@ -166,7 +239,7 @@ namespace HotelManagementSystem
             DateTime checkIn = dtpCheckIn.Value;
             DateTime checkOut = dtpCheckOut.Value;
 
-            // Validate Check-In and Check-Out dates cannot be in the past
+            // Final backend safeguards
             if (checkIn.Date < DateTime.Today)
             {
                 MessageBox.Show("Invalid Check In Date: Check-in date cannot be in the past. It must be today or a future date.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
