@@ -37,23 +37,23 @@
             this.btnManageRooms = new System.Windows.Forms.Button();
             this.btnDashboard = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtRoomNo = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cmbRoomType = new System.Windows.Forms.ComboBox();
-            this.txtFloor = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtPrice = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.btnBack = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.btnUpdate = new System.Windows.Forms.Button();
+            this.btnAdd = new System.Windows.Forms.Button();
             this.cmbStatus = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.btnAdd = new System.Windows.Forms.Button();
-            this.btnUpdate = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
+            this.txtPrice = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtFloor = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cmbRoomType = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtRoomNo = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dgvRooms = new System.Windows.Forms.DataGridView();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.btnClear = new System.Windows.Forms.Button();
             this.grpQuickActions.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -139,7 +139,7 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.Tan;
-            this.groupBox1.Controls.Add(this.btnClear);
+            this.groupBox1.Controls.Add(this.btnBack);
             this.groupBox1.Controls.Add(this.btnDelete);
             this.groupBox1.Controls.Add(this.btnUpdate);
             this.groupBox1.Controls.Add(this.btnAdd);
@@ -161,82 +161,49 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Room Specifications";
             // 
-            // groupBox2
+            // btnBack
             // 
-            this.groupBox2.BackColor = System.Drawing.Color.Tan;
-            this.groupBox2.Controls.Add(this.dgvRooms);
-            this.groupBox2.Font = new System.Drawing.Font("Loben Variable Trial Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(322, 104);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(472, 329);
-            this.groupBox2.TabIndex = 4;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Registered Rooms";
+            this.btnBack.Font = new System.Drawing.Font("Loben Variable Trial Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBack.Location = new System.Drawing.Point(10, 277);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(270, 29);
+            this.btnBack.TabIndex = 13;
+            this.btnBack.Text = "&Back";
+            this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
             // 
-            // label1
+            // btnDelete
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 35);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(81, 19);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Room No.";
+            this.btnDelete.Font = new System.Drawing.Font("Loben Variable Trial Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDelete.Location = new System.Drawing.Point(195, 242);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(85, 29);
+            this.btnDelete.TabIndex = 12;
+            this.btnDelete.Text = "&Delete";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
-            // txtRoomNo
+            // btnUpdate
             // 
-            this.txtRoomNo.Location = new System.Drawing.Point(10, 62);
-            this.txtRoomNo.Name = "txtRoomNo";
-            this.txtRoomNo.Size = new System.Drawing.Size(270, 27);
-            this.txtRoomNo.TabIndex = 1;
+            this.btnUpdate.Font = new System.Drawing.Font("Loben Variable Trial Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnUpdate.Location = new System.Drawing.Point(98, 242);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(91, 29);
+            this.btnUpdate.TabIndex = 11;
+            this.btnUpdate.Text = "&Update";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
-            // label2
+            // btnAdd
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 99);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(93, 19);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Room Type";
-            // 
-            // cmbRoomType
-            // 
-            this.cmbRoomType.FormattingEnabled = true;
-            this.cmbRoomType.Location = new System.Drawing.Point(10, 125);
-            this.cmbRoomType.Name = "cmbRoomType";
-            this.cmbRoomType.Size = new System.Drawing.Size(121, 27);
-            this.cmbRoomType.TabIndex = 3;
-            // 
-            // txtFloor
-            // 
-            this.txtFloor.Location = new System.Drawing.Point(141, 126);
-            this.txtFloor.Name = "txtFloor";
-            this.txtFloor.Size = new System.Drawing.Size(139, 27);
-            this.txtFloor.TabIndex = 5;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(137, 99);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(45, 19);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Floor";
-            // 
-            // txtPrice
-            // 
-            this.txtPrice.Location = new System.Drawing.Point(10, 193);
-            this.txtPrice.Name = "txtPrice";
-            this.txtPrice.Size = new System.Drawing.Size(121, 27);
-            this.txtPrice.TabIndex = 7;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 166);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(45, 19);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "Price";
+            this.btnAdd.Font = new System.Drawing.Font("Loben Variable Trial Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAdd.Location = new System.Drawing.Point(10, 242);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(82, 29);
+            this.btnAdd.TabIndex = 10;
+            this.btnAdd.Text = "&Add";
+            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // cmbStatus
             // 
@@ -255,38 +222,82 @@
             this.label5.TabIndex = 8;
             this.label5.Text = "Status";
             // 
-            // btnAdd
+            // txtPrice
             // 
-            this.btnAdd.Font = new System.Drawing.Font("Loben Variable Trial Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAdd.Location = new System.Drawing.Point(10, 242);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(82, 29);
-            this.btnAdd.TabIndex = 10;
-            this.btnAdd.Text = "&Add";
-            this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.txtPrice.Location = new System.Drawing.Point(10, 193);
+            this.txtPrice.Name = "txtPrice";
+            this.txtPrice.Size = new System.Drawing.Size(121, 27);
+            this.txtPrice.TabIndex = 7;
             // 
-            // btnUpdate
+            // label4
             // 
-            this.btnUpdate.Font = new System.Drawing.Font("Loben Variable Trial Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUpdate.Location = new System.Drawing.Point(98, 242);
-            this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(91, 29);
-            this.btnUpdate.TabIndex = 11;
-            this.btnUpdate.Text = "&Update";
-            this.btnUpdate.UseVisualStyleBackColor = true;
-            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 166);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(45, 19);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "Price";
             // 
-            // btnDelete
+            // txtFloor
             // 
-            this.btnDelete.Font = new System.Drawing.Font("Loben Variable Trial Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDelete.Location = new System.Drawing.Point(195, 242);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(85, 29);
-            this.btnDelete.TabIndex = 12;
-            this.btnDelete.Text = "&Delete";
-            this.btnDelete.UseVisualStyleBackColor = true;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            this.txtFloor.Location = new System.Drawing.Point(141, 126);
+            this.txtFloor.Name = "txtFloor";
+            this.txtFloor.Size = new System.Drawing.Size(139, 27);
+            this.txtFloor.TabIndex = 5;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(137, 99);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(45, 19);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Floor";
+            // 
+            // cmbRoomType
+            // 
+            this.cmbRoomType.FormattingEnabled = true;
+            this.cmbRoomType.Location = new System.Drawing.Point(10, 125);
+            this.cmbRoomType.Name = "cmbRoomType";
+            this.cmbRoomType.Size = new System.Drawing.Size(121, 27);
+            this.cmbRoomType.TabIndex = 3;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 99);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(93, 19);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Room Type";
+            // 
+            // txtRoomNo
+            // 
+            this.txtRoomNo.Location = new System.Drawing.Point(10, 62);
+            this.txtRoomNo.Name = "txtRoomNo";
+            this.txtRoomNo.Size = new System.Drawing.Size(270, 27);
+            this.txtRoomNo.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 35);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(81, 19);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Room No.";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.BackColor = System.Drawing.Color.Tan;
+            this.groupBox2.Controls.Add(this.dgvRooms);
+            this.groupBox2.Font = new System.Drawing.Font("Loben Variable Trial Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox2.Location = new System.Drawing.Point(322, 104);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(472, 329);
+            this.groupBox2.TabIndex = 4;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Registered Rooms";
             // 
             // dgvRooms
             // 
@@ -299,22 +310,11 @@
             this.dgvRooms.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvRooms.Size = new System.Drawing.Size(460, 294);
             this.dgvRooms.TabIndex = 0;
-            this.dgvRooms.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRooms_CellContentClick);
+            this.dgvRooms.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRooms_CellClick);
             // 
             // errorProvider1
             // 
             this.errorProvider1.ContainerControl = this;
-            // 
-            // btnClear
-            // 
-            this.btnClear.Font = new System.Drawing.Font("Loben Variable Trial Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClear.Location = new System.Drawing.Point(10, 277);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(270, 29);
-            this.btnClear.TabIndex = 13;
-            this.btnClear.Text = "&Clear";
-            this.btnClear.UseVisualStyleBackColor = true;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // FormRoomManagement
             // 
@@ -368,6 +368,6 @@
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.DataGridView dgvRooms;
         private System.Windows.Forms.ErrorProvider errorProvider1;
-        private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.Button btnBack;
     }
 }

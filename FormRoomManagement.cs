@@ -18,12 +18,15 @@ namespace HotelManagementSystem
     public partial class FormRoomManagement : Form
     {
         private ErrorProvider errorProvider = new ErrorProvider();
+
+        // Initializes the form components and attaches event handlers for real-time validation
         public FormRoomManagement()
         {
             InitializeComponent();
             InitializeValidationEvents();
         }
 
+        // Subscribes to text change events to trigger validation as the user types
         private void InitializeValidationEvents()
         {
             txtFloor.TextChanged += (s, e) => ValidateFloor();
@@ -31,6 +34,7 @@ namespace HotelManagementSystem
             txtPrice.TextChanged += (s, e) => ValidatePrice();
         }
 
+        // Validates that the floor input contains only numbers and is within the 1-10 range
         private bool ValidateFloor()
         {
             string val = txtFloor.Text.Trim();
@@ -39,7 +43,7 @@ namespace HotelManagementSystem
                 errorProvider.SetError(txtFloor, "Floor number is required. Letters and special characters are not allowed.");
                 return false;
             }
-            if (!System.Text.RegularExpressions.Regex.IsMatch(val, @"^d+$"))
+            if (!System.Text.RegularExpressions.Regex.IsMatch(val, @"^\d+$"))
             {
                 errorProvider.SetError(txtFloor, "Invalid Floor: Numbers only. Letters and special characters are not allowed.");
                 return false;
@@ -54,6 +58,7 @@ namespace HotelManagementSystem
             return true;
         }
 
+        // Validates that the room number contains only digits and matches the required floor prefix
         private bool ValidateRoomNo()
         {
             string roomNo = txtRoomNo.Text.Trim();
@@ -62,7 +67,7 @@ namespace HotelManagementSystem
                 errorProvider.SetError(txtRoomNo, "Room number is required.");
                 return false;
             }
-            if (!System.Text.RegularExpressions.Regex.IsMatch(roomNo, @"^d+$"))
+            if (!System.Text.RegularExpressions.Regex.IsMatch(roomNo, @"^\d+$"))
             {
                 errorProvider.SetError(txtRoomNo, "Invalid Room Number: Numbers only. Letters and special characters are not allowed.");
                 return false;
@@ -70,7 +75,7 @@ namespace HotelManagementSystem
 
             // Check if prefix matches the floor
             string floorVal = txtFloor.Text.Trim();
-            if (System.Text.RegularExpressions.Regex.IsMatch(floorVal, @"^d+$"))
+            if (System.Text.RegularExpressions.Regex.IsMatch(floorVal, @"^\d+$"))
             {
                 int floor = int.Parse(floorVal);
                 if (floor >= 1 && floor <= 10 && !roomNo.StartsWith(floorVal))
@@ -84,6 +89,7 @@ namespace HotelManagementSystem
             return true;
         }
 
+        // Validates the price input to ensure it is a valid numeric structure (allows decimals)
         private bool ValidatePrice()
         {
             string val = txtPrice.Text.Trim();
@@ -92,7 +98,7 @@ namespace HotelManagementSystem
                 errorProvider.SetError(txtPrice, "Price is required.");
                 return false;
             }
-            if (!System.Text.RegularExpressions.Regex.IsMatch(val, @"^d+(.d+)?$"))
+            if (!System.Text.RegularExpressions.Regex.IsMatch(val, @"^\d+(\.\d+)?$"))
             {
                 errorProvider.SetError(txtPrice, "Invalid Price: Numeric pricing structures only (no letters or special characters).");
                 return false;
@@ -101,13 +107,25 @@ namespace HotelManagementSystem
             return true;
         }
 
+        // Populates the combo boxes with predefined valid selections for room types and statuses
+        private void InitializeComboBoxes()
+        {
+            cmbRoomType.Items.Clear();
+            cmbStatus.Items.Clear();
 
+            cmbRoomType.Items.AddRange(new string[] { "Single", "Double", "Deluxe", "Suite" });
+            cmbStatus.Items.AddRange(new string[] { "Available", "Maintenance", "Occupied" });
+        }
+
+        // Triggers upon form load to initialize dropdowns, load the data grid, and reset input fields
         private void FormRoomManagement_Load(object sender, EventArgs e)
         {
+            InitializeComboBoxes();
             LoadRoomsGrid();
             ClearInputControls();
         }
 
+        // Fetches all registered rooms from the database and binds them to the data grid view
         private void LoadRoomsGrid()
         {
             string query = "SELECT room_no AS 'Room No', room_type AS 'Type', price_per_night AS 'Price/Night', status AS 'Status', floor AS 'Floor' FROM `rooms` ORDER BY room_no ASC";
@@ -118,12 +136,18 @@ namespace HotelManagementSystem
             }
         }
 
+        // Resets all input fields and UI states to prepare for a new room entry
         private void ClearInputControls()
         {
             txtRoomNo.Clear();
-            cmbRoomType.SelectedIndex = 0;
+
+            // Check added to prevent crashing if clear is called before init
+            if (cmbRoomType.Items.Count > 0) cmbRoomType.SelectedIndex = 0;
+
             txtPrice.Clear();
-            cmbStatus.SelectedIndex = 0;
+
+            if (cmbStatus.Items.Count > 0) cmbStatus.SelectedIndex = 0;
+
             txtFloor.Text = "1";
             txtRoomNo.Focus();
             btnDelete.Enabled = false;
@@ -133,7 +157,7 @@ namespace HotelManagementSystem
             errorProvider.Clear(); // Clear all error indicators
         }
 
-
+        // Handles the insertion of a new room record into the database after validating all inputs
         private void btnAdd_Click(object sender, EventArgs e)
         {
             // Run all validations instantly
@@ -183,6 +207,7 @@ namespace HotelManagementSystem
 
         }
 
+        // Processes modifications to an existing room's details, preventing updates if the room is occupied
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             string roomNo = txtRoomNo.Text.Trim();
@@ -233,6 +258,7 @@ namespace HotelManagementSystem
 
         }
 
+        // Handles the removal of a room from the database, blocking deletion if the room is occupied
         private void btnDelete_Click(object sender, EventArgs e)
         {
             string roomNo = txtRoomNo.Text.Trim();
@@ -261,12 +287,16 @@ namespace HotelManagementSystem
 
         }
 
-        private void dgvRooms_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvRooms_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
                 DataGridViewRow row = dgvRooms.Rows[e.RowIndex];
+
+                // Checks the database status directly from the grid data
                 string status = row.Cells["Status"].Value.ToString();
+
+                // Prevents modification or deletion of rooms currently in use
                 if (status == "Occupied")
                 {
                     MessageBox.Show("This room is currently occupied and cannot be edited or deleted.", "Room Occupied Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -274,21 +304,24 @@ namespace HotelManagementSystem
                     return;
                 }
 
+                // Populates the form controls with the data from the selected row
                 txtRoomNo.Text = row.Cells["Room No"].Value.ToString();
                 cmbRoomType.SelectedItem = row.Cells["Type"].Value.ToString();
                 txtPrice.Text = row.Cells["Price/Night"].Value.ToString();
                 cmbStatus.SelectedItem = row.Cells["Status"].Value.ToString();
                 txtFloor.Text = row.Cells["Floor"].Value.ToString();
 
-                txtRoomNo.ReadOnly = true; // Key shouldn't be altered on updates
+                // Locks the Room No field because primary keys should never be altered during an update
+                txtRoomNo.ReadOnly = true;
+
+                // Disables adding a new record to prevent duplicate key crashes, and enables modification buttons
                 btnAdd.Enabled = false;
                 btnUpdate.Enabled = true;
                 btnDelete.Enabled = true;
             }
-
         }
 
-        private void btnClear_Click(object sender, EventArgs e)
+        private void btnBack_Click(object sender, EventArgs e)
         {
             ClearInputControls();
         }

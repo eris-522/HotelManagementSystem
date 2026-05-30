@@ -27,6 +27,7 @@ namespace HotelManagementSystem
             InitializeComponent();
         }
 
+        // Feature: Initializes default UI state, populating available rooms and setting base check-in/out dates.
         private void FormBooking_Load(object sender, EventArgs e)
         {
             LoadBookingsGrid();
@@ -36,12 +37,13 @@ namespace HotelManagementSystem
             txtGuestId.TextChanged += txtGuestId_TextChanged;
         }
 
+        // Feature: Auto-populates guest details if an existing guest ID is entered.
         private void txtGuestId_TextChanged(object sender, EventArgs e)
         {
             string gId = txtGuestId.Text.Trim();
             if (string.IsNullOrEmpty(gId) || gId.Length < 7) return;
 
-            string query = $"SELECT full_name, phone FROM `guests` WHERE guest_id = @gId";
+            string query = "SELECT full_name, phone FROM `guests` WHERE guest_id = @gId";
             using (MySqlConnection conn = DatabaseConnection.GetConnection())
             {
                 if (conn == null) return;
@@ -58,9 +60,9 @@ namespace HotelManagementSystem
                     }
                 }
             }
-
         }
 
+        // Feature: Fetches and binds current booking records to the DataGridView.
         private void LoadBookingsGrid()
         {
             string query = "SELECT b.booking_id AS 'Booking ID', b.room_no AS 'Room', g.full_name AS 'Guest Name', " +
@@ -76,6 +78,7 @@ namespace HotelManagementSystem
             }
         }
 
+        // Feature: Queries the database for unoccupied rooms and populates the selection dropdown.
         private void LoadAvailableRoomsComboBox()
         {
             cmbRooms.Items.Clear();
@@ -85,12 +88,13 @@ namespace HotelManagementSystem
             {
                 foreach (DataRow row in dt.Rows)
                 {
-                    cmbRooms.Items.Add($"${row["room_no"]} ($${row["price_per_night"]}/night)");
+                    cmbRooms.Items.Add($"{row["room_no"]} (${row["price_per_night"]}/night)");
                 }
             }
             if (cmbRooms.Items.Count > 0) cmbRooms.SelectedIndex = 0;
         }
 
+        // Feature: Parses the selected room's rate and dynamically calculates total cost based on the date span.
         private void CalculateCostEvent(object sender, EventArgs e)
         {
             try
@@ -99,8 +103,8 @@ namespace HotelManagementSystem
 
                 string selected = cmbRooms.SelectedItem.ToString();
                 // Extract price out of "101 ($50.00/night)"
-                int start = selected.indexOf('$') + 1;
-                int end = selected.indexOf('/');
+                int start = selected.IndexOf('$') + 1;
+                int end = selected.IndexOf('/');
                 if (start > 0 && end > start)
                 {
                     string pricePart = selected.Substring(start, end - start).Trim();
@@ -118,6 +122,7 @@ namespace HotelManagementSystem
             catch { }
         }
 
+        // Feature: Validates all inputs and commits a new reservation transaction to the database, updating room status.
         private void btnBook_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(txtGuestId.Text) || string.IsNullOrEmpty(txtGuestName.Text) || cmbRooms.SelectedItem == null)
@@ -131,14 +136,14 @@ namespace HotelManagementSystem
             string guestPhone = txtGuestPhone.Text?.Trim() ?? "";
 
             // Validate Guest ID matches strict ID-0000 format
-            if (!System.Text.RegularExpressions.Regex.IsMatch(guestId, "^ID-\d{4}$", System.Text.RegularExpressions.RegexOptions.IgnoreCase))
+            if (!System.Text.RegularExpressions.Regex.IsMatch(guestId, @"^ID-\d{4}$", System.Text.RegularExpressions.RegexOptions.IgnoreCase))
             {
                 MessageBox.Show("Invalid Guest ID Format: Guest ID must follow the strict format of ID-0000 (e.g. ID-1234, ID-0045, etc.).", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             // Validate Guest Name does not allow numbers or special characters
-            if (!System.Text.RegularExpressions.Regex.IsMatch(guestName, "^[a-zA-Z\s]+$"))
+            if (!System.Text.RegularExpressions.Regex.IsMatch(guestName, @"^[a-zA-Z\s]+$"))
             {
                 MessageBox.Show("Invalid Guest Name: Numbers and special characters are not allowed in the Guest Full Name.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -193,7 +198,7 @@ namespace HotelManagementSystem
                     try
                     {
                         // 1. Insert Guest if record not exists (Verify Guest ID Uniqueness and prevent reuse under a different name)
-                        string guestCheckQ = $"SELECT full_name FROM `${config.tableGuests}` WHERE guest_id = @gId";
+                        string guestCheckQ = "SELECT full_name FROM `guests` WHERE guest_id = @gId";
                         using (MySqlCommand checkCmd = new MySqlCommand(guestCheckQ, conn, transaction))
                         {
                             checkCmd.Parameters.AddWithValue("@gId", guestId);
@@ -211,7 +216,7 @@ namespace HotelManagementSystem
                             }
                             else
                             {
-                                string gInsertQ = $"INSERT INTO `${config.tableGuests}` (guest_id, full_name, phone) VALUES (@gId, @name, @phone)";
+                                string gInsertQ = "INSERT INTO `guests` (guest_id, full_name, phone) VALUES (@gId, @name, @phone)";
                                 using (MySqlCommand insCmd = new MySqlCommand(gInsertQ, conn, transaction))
                                 {
                                     insCmd.Parameters.AddWithValue("@gId", guestId);
@@ -256,9 +261,9 @@ namespace HotelManagementSystem
                     }
                 }
             }
-
         }
 
+        // Feature: Processes final payment, manages early departure penalties/waivers, and updates status to 'CheckedOut'.
         private void btnCheckOut_Click(object sender, EventArgs e)
         {
             if (dgvBookings.CurrentRow == null) return;
@@ -317,14 +322,14 @@ namespace HotelManagementSystem
                     {
                         // Given 24-48h notice: waive remaining nights
                         finalSettlement = actualNights * dailyRate;
-                        MessageBox.Show($"24-48h notice verified! Remaining {originalNights - actualNights} nights are waived. Adjusted Stay Bill: ${ finalSettlement: F2}", "Notice Waived", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show($"24-48h notice verified! Remaining {originalNights - actualNights} nights are waived. Adjusted Stay Bill: ${finalSettlement:F2}", "Notice Waived", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
                         // Abrupt departure: stayed nights + 1 night penalty (not exceeding original total)
                         decimal earlyDepartureFee = dailyRate;
-                        finalSettlement = Math.Min((actualNights * dailyRate) + earlyDepartureFee, originalCost);MessageBox.Show($"Abrupt departure without notice!" +
-                            $"Charging {actualNights} nights stayed plus 1 night penalty fee of ${earlyDepartureFee:F2}. Adjusted Settlement Bill: ${ finalSettlement: F2}",
+                        finalSettlement = Math.Min((actualNights * dailyRate) + earlyDepartureFee, originalCost);
+                        MessageBox.Show($"Abrupt departure without notice!\nCharging {actualNights} nights stayed plus 1 night penalty fee of ${earlyDepartureFee:F2}. Adjusted Settlement Bill: ${finalSettlement:F2}",
                             "Early Departure Penalty Applied", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     }
                 }
@@ -373,9 +378,9 @@ namespace HotelManagementSystem
                     }
                 }
             }
-
         }
 
+        // Feature: Generates a formatted text receipt for the completed booking transaction.
         private void btnViewReceipt_Click(object sender, EventArgs e)
         {
             if (dgvBookings.CurrentRow == null) return;
@@ -397,7 +402,7 @@ namespace HotelManagementSystem
             string cost = row.Cells["Cost"].Value.ToString();
 
             string receipt = $"========================================\n" +
-                             $"       {config.hotelName.ToUpper()} RECEIPT        \n" +
+                             $"                RECEIPT        \n" +
                              $"========================================\n" +
                              $"Receipt No:     RC-{bookingId.PadLeft(4, '0')}-{roomNo}\n" +
                              $"Guest Name:     {guestName}\n" +
@@ -414,49 +419,55 @@ namespace HotelManagementSystem
             MessageBox.Show(receipt, "Official Checkout Billing Invoice Receipt", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        // Feature: Matches incoming phone numbers against verified Philippine mobile and landline standard regex patterns.
         private bool IsValidPhilippinePhone(string phone)
         {
             if (string.IsNullOrWhiteSpace(phone)) return false;
-            string cleaned = System.Text.RegularExpressions.Regex.Replace(phone, @"[^d+]", "");
+
+            string cleaned = System.Text.RegularExpressions.Regex.Replace(phone, @"[^\d+]", "");
             if (phone.Trim().StartsWith("+63") || phone.Trim().StartsWith("63"))
             {
-                string digits = System.Text.RegularExpressions.Regex.Replace(cleaned, @"[^d]", "");
-                if (System.Text.RegularExpressions.Regex.IsMatch(digits, "^639\d{9}$")) return true;
-                if (System.Text.RegularExpressions.Regex.IsMatch(digits, "^632\d{8}$")) return true;
-                if (System.Text.RegularExpressions.Regex.IsMatch(digits, "^63[3-9]\d{8}$")) return true;
+                string digits = System.Text.RegularExpressions.Regex.Replace(cleaned, @"[^\d]", "");
+                if (System.Text.RegularExpressions.Regex.IsMatch(digits, @"^639\d{9}$")) return true;
+                if (System.Text.RegularExpressions.Regex.IsMatch(digits, @"^632\d{8}$")) return true;
+                if (System.Text.RegularExpressions.Regex.IsMatch(digits, @"^63[3-9]\d{8}$")) return true;
                 return false;
             }
-            string onlyDigits = System.Text.RegularExpressions.Regex.Replace(cleaned, @"[^d]", "");
+
+            string onlyDigits = System.Text.RegularExpressions.Regex.Replace(cleaned, @"[^\d]", "");
             if (onlyDigits.StartsWith("0"))
             {
-                if (System.Text.RegularExpressions.Regex.IsMatch(onlyDigits, "^09\d{9}$")) return true;
-                if (System.Text.RegularExpressions.Regex.IsMatch(onlyDigits, "^02\d{8}$")) return true;
-                if (System.Text.RegularExpressions.Regex.IsMatch(onlyDigits, "^0[3-9]\d{8,9}$")) return true;
+                if (System.Text.RegularExpressions.Regex.IsMatch(onlyDigits, @"^09\d{9}$")) return true;
+                if (System.Text.RegularExpressions.Regex.IsMatch(onlyDigits, @"^02\d{8}$")) return true;
+                if (System.Text.RegularExpressions.Regex.IsMatch(onlyDigits, @"^0[3-9]\d{8,9}$")) return true;
             }
             return false;
         }
 
+        // Feature: Formats raw input string into standardized spacing conventions depending on the region prefix.
         private string FormatPhilippinePhone(string phone)
         {
             string cleaned = phone.Trim();
             if (string.IsNullOrEmpty(cleaned)) return "";
-            string digits = System.Text.RegularExpressions.Regex.Replace(cleaned, @"[^d]", "");
+
+            string digits = System.Text.RegularExpressions.Regex.Replace(cleaned, @"[^\d]", "");
             if (cleaned.StartsWith("+63") || cleaned.StartsWith("63"))
             {
-                if (System.Text.RegularExpressions.Regex.IsMatch(digits, "^639\d{9}$"))
+                if (System.Text.RegularExpressions.Regex.IsMatch(digits, @"^639\d{9}$"))
                     return $"+63 9{digits.Substring(3, 2)} {digits.Substring(5, 3)} {digits.Substring(8, 4)}";
-                if (System.Text.RegularExpressions.Regex.IsMatch(digits, "^632\d{8}$"))
+                if (System.Text.RegularExpressions.Regex.IsMatch(digits, @"^632\d{8}$"))
                     return $"+63 2 {digits.Substring(3, 4)} {digits.Substring(7, 4)}";
-                if (System.Text.RegularExpressions.Regex.IsMatch(digits, "^63[3-9]\d{8}$"))
+                if (System.Text.RegularExpressions.Regex.IsMatch(digits, @"^63[3-9]\d{8}$"))
                     return $"+63 {digits.Substring(2, 2)} {digits.Substring(4, 3)} {digits.Substring(7, 4)}";
             }
+
             if (digits.StartsWith("0"))
             {
-                if (System.Text.RegularExpressions.Regex.IsMatch(digits, "^09\d{9}$"))
+                if (System.Text.RegularExpressions.Regex.IsMatch(digits, @"^09\d{9}$"))
                     return $"09{digits.Substring(2, 2)}-{digits.Substring(4, 3)}-{digits.Substring(7, 4)}";
-                if (System.Text.RegularExpressions.Regex.IsMatch(digits, "^02\d{8}$"))
+                if (System.Text.RegularExpressions.Regex.IsMatch(digits, @"^02\d{8}$"))
                     return $"02-{digits.Substring(2, 4)}-{digits.Substring(6, 4)}";
-                if (System.Text.RegularExpressions.Regex.IsMatch(digits, "^0[3-9]\d{8,9}$"))
+                if (System.Text.RegularExpressions.Regex.IsMatch(digits, @"^0[3-9]\d{8,9}$"))
                 {
                     int areaLen = digits.StartsWith("032") || digits.StartsWith("082") ? 3 : 4;
                     if (areaLen == 3)

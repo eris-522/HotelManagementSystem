@@ -120,6 +120,7 @@
     <Compile Include="FormRoomManagement.Designer.cs">
       <DependentUpon>FormRoomManagement.cs</DependentUpon>
     </Compile>
+    <Compile Include="Microsoft\VisualBasic\Interaction.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormBooking.resx">

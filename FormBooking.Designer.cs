@@ -179,9 +179,11 @@
             // 
             this.dtpCheckOut.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpCheckOut.Location = new System.Drawing.Point(195, 186);
+            this.dtpCheckOut.MinDate = new System.DateTime(2026, 5, 30, 0, 0, 0, 0);
             this.dtpCheckOut.Name = "dtpCheckOut";
             this.dtpCheckOut.Size = new System.Drawing.Size(186, 27);
             this.dtpCheckOut.TabIndex = 17;
+            this.dtpCheckOut.Value = new System.DateTime(2026, 5, 30, 0, 0, 0, 0);
             // 
             // label2
             // 
@@ -196,11 +198,11 @@
             // 
             this.dtpCheckIn.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpCheckIn.Location = new System.Drawing.Point(10, 186);
-            this.dtpCheckIn.MinDate = new System.DateTime(2026, 5, 29, 22, 18, 46, 0);
+            this.dtpCheckIn.MinDate = new System.DateTime(2026, 5, 30, 0, 0, 0, 0);
             this.dtpCheckIn.Name = "dtpCheckIn";
             this.dtpCheckIn.Size = new System.Drawing.Size(179, 27);
             this.dtpCheckIn.TabIndex = 15;
-            this.dtpCheckIn.Value = new System.DateTime(2026, 5, 29, 22, 18, 46, 0);
+            this.dtpCheckIn.Value = new System.DateTime(2026, 5, 30, 0, 0, 0, 0);
             // 
             // txtGuestName
             // 
