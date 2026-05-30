@@ -474,20 +474,20 @@ namespace HotelManagementSystem
             string checkOut = row.Cells["Check Out"].Value.ToString();
             string cost = row.Cells["Cost"].Value.ToString();
 
-            string receipt = $"========================================\n" +
+            string receipt = $"=======================================\n" +
                              $"                RECEIPT        \n" +
-                             $"========================================\n" +
+                             $"=======================================\n" +
                              $"Receipt No:     RC-{bookingId.PadLeft(4, '0')}-{roomNo}\n" +
                              $"Guest Name:     {guestName}\n" +
                              $"Room Stayed:    Room {roomNo}\n" +
                              $"Check-In Date:  {checkIn}\n" +
                              $"Check-Out Date: {checkOut}\n" +
-                             $"----------------------------------------\n" +
+                             $"---------------------------------------\n" +
                              $"Total Stay Paid: ${cost}\n" +
                              $"Status:          PAID & CLEAR IN FULL\n" +
-                             $"========================================\n" +
+                             $"=======================================\n" +
                              $"       Thank you for your stay!         \n" +
-                             $"========================================\n";
+                             $"=======================================\n";
 
             MessageBox.Show(receipt, "Official Checkout Billing Invoice Receipt", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -549,6 +549,26 @@ namespace HotelManagementSystem
                 }
             }
             return cleaned;
+        }
+
+        private void btnDashboard_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnManageRooms_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnBookings_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

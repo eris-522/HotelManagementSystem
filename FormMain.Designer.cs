@@ -28,16 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.grpQuickActions = new System.Windows.Forms.Panel();
             this.dashboard = new System.Windows.Forms.Label();
-            this.btnDashboard = new System.Windows.Forms.Button();
-            this.btnManageRooms = new System.Windows.Forms.Button();
-            this.btnGuests = new System.Windows.Forms.Button();
-            this.btnBookings = new System.Windows.Forms.Button();
-            this.btnLogout = new System.Windows.Forms.Button();
             this.pnlAvailable = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
             this.lblAvailableCount = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.pnlOccupied = new System.Windows.Forms.Panel();
             this.lblOccupiedCount = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -47,25 +41,17 @@
             this.pnlGuests = new System.Windows.Forms.Panel();
             this.lblGuestCount = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.grpQuickActions.SuspendLayout();
+            this.grpQuickActions = new System.Windows.Forms.Panel();
+            this.btnLogout = new System.Windows.Forms.Button();
+            this.btnBookings = new System.Windows.Forms.Button();
+            this.btnManageRooms = new System.Windows.Forms.Button();
+            this.btnDashboard = new System.Windows.Forms.Button();
             this.pnlAvailable.SuspendLayout();
             this.pnlOccupied.SuspendLayout();
             this.pnlMaintenance.SuspendLayout();
             this.pnlGuests.SuspendLayout();
+            this.grpQuickActions.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // grpQuickActions
-            // 
-            this.grpQuickActions.BackColor = System.Drawing.Color.AntiqueWhite;
-            this.grpQuickActions.Controls.Add(this.btnLogout);
-            this.grpQuickActions.Controls.Add(this.btnGuests);
-            this.grpQuickActions.Controls.Add(this.btnBookings);
-            this.grpQuickActions.Controls.Add(this.btnManageRooms);
-            this.grpQuickActions.Controls.Add(this.btnDashboard);
-            this.grpQuickActions.Location = new System.Drawing.Point(262, 44);
-            this.grpQuickActions.Name = "grpQuickActions";
-            this.grpQuickActions.Size = new System.Drawing.Size(532, 39);
-            this.grpQuickActions.TabIndex = 0;
             // 
             // dashboard
             // 
@@ -77,61 +63,6 @@
             this.dashboard.TabIndex = 0;
             this.dashboard.Text = "Dashboard";
             // 
-            // btnDashboard
-            // 
-            this.btnDashboard.Font = new System.Drawing.Font("Loben Variable Trial Light", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDashboard.Location = new System.Drawing.Point(43, 0);
-            this.btnDashboard.Name = "btnDashboard";
-            this.btnDashboard.Size = new System.Drawing.Size(107, 39);
-            this.btnDashboard.TabIndex = 0;
-            this.btnDashboard.Text = "Dashboard";
-            this.btnDashboard.UseVisualStyleBackColor = true;
-            // 
-            // btnManageRooms
-            // 
-            this.btnManageRooms.Font = new System.Drawing.Font("Loben Variable Trial Light", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnManageRooms.Location = new System.Drawing.Point(154, 0);
-            this.btnManageRooms.Name = "btnManageRooms";
-            this.btnManageRooms.Size = new System.Drawing.Size(91, 39);
-            this.btnManageRooms.TabIndex = 1;
-            this.btnManageRooms.Text = "Rooms";
-            this.btnManageRooms.UseVisualStyleBackColor = true;
-            this.btnManageRooms.Click += new System.EventHandler(this.btnManageRooms_Click);
-            // 
-            // btnGuests
-            // 
-            this.btnGuests.Font = new System.Drawing.Font("Loben Variable Trial Light", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGuests.Location = new System.Drawing.Point(351, 0);
-            this.btnGuests.Name = "btnGuests";
-            this.btnGuests.Size = new System.Drawing.Size(86, 39);
-            this.btnGuests.TabIndex = 3;
-            this.btnGuests.Text = "Guests";
-            this.btnGuests.UseVisualStyleBackColor = true;
-            this.btnGuests.Click += new System.EventHandler(this.btnGuests_Click);
-            // 
-            // btnBookings
-            // 
-            this.btnBookings.Font = new System.Drawing.Font("Loben Variable Trial Light", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBookings.Location = new System.Drawing.Point(250, 0);
-            this.btnBookings.Name = "btnBookings";
-            this.btnBookings.Size = new System.Drawing.Size(96, 39);
-            this.btnBookings.TabIndex = 2;
-            this.btnBookings.Text = "Booking";
-            this.btnBookings.UseVisualStyleBackColor = true;
-            this.btnBookings.Click += new System.EventHandler(this.btnBookings_Click);
-            // 
-            // btnLogout
-            // 
-            this.btnLogout.Font = new System.Drawing.Font("Loben Variable Trial Light", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLogout.ForeColor = System.Drawing.Color.Maroon;
-            this.btnLogout.Location = new System.Drawing.Point(441, 0);
-            this.btnLogout.Name = "btnLogout";
-            this.btnLogout.Size = new System.Drawing.Size(86, 39);
-            this.btnLogout.TabIndex = 4;
-            this.btnLogout.Text = "Logout";
-            this.btnLogout.UseVisualStyleBackColor = true;
-            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
-            // 
             // pnlAvailable
             // 
             this.pnlAvailable.BackColor = System.Drawing.Color.Tan;
@@ -141,16 +72,6 @@
             this.pnlAvailable.Name = "pnlAvailable";
             this.pnlAvailable.Size = new System.Drawing.Size(187, 151);
             this.pnlAvailable.TabIndex = 1;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Loben Variable Trial Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(19, 19);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(148, 19);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "AVAILABLE ROOMS";
             // 
             // lblAvailableCount
             // 
@@ -162,6 +83,16 @@
             this.lblAvailableCount.TabIndex = 6;
             this.lblAvailableCount.Text = "0";
             this.lblAvailableCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Loben Variable Trial Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(19, 19);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(148, 19);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "AVAILABLE ROOMS";
             // 
             // pnlOccupied
             // 
@@ -256,24 +187,81 @@
             this.label8.TabIndex = 5;
             this.label8.Text = "TOTAL GUESTS";
             // 
+            // grpQuickActions
+            // 
+            this.grpQuickActions.BackColor = System.Drawing.Color.AntiqueWhite;
+            this.grpQuickActions.Controls.Add(this.btnLogout);
+            this.grpQuickActions.Controls.Add(this.btnBookings);
+            this.grpQuickActions.Controls.Add(this.btnManageRooms);
+            this.grpQuickActions.Controls.Add(this.btnDashboard);
+            this.grpQuickActions.Font = new System.Drawing.Font("Loben Variable Trial Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpQuickActions.Location = new System.Drawing.Point(350, 44);
+            this.grpQuickActions.Name = "grpQuickActions";
+            this.grpQuickActions.Size = new System.Drawing.Size(444, 39);
+            this.grpQuickActions.TabIndex = 10;
+            // 
+            // btnLogout
+            // 
+            this.btnLogout.Font = new System.Drawing.Font("Loben Variable Trial Light", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLogout.ForeColor = System.Drawing.Color.Maroon;
+            this.btnLogout.Location = new System.Drawing.Point(352, 0);
+            this.btnLogout.Name = "btnLogout";
+            this.btnLogout.Size = new System.Drawing.Size(86, 39);
+            this.btnLogout.TabIndex = 4;
+            this.btnLogout.Text = "Logout";
+            this.btnLogout.UseVisualStyleBackColor = true;
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
+            // 
+            // btnBookings
+            // 
+            this.btnBookings.Font = new System.Drawing.Font("Loben Variable Trial Light", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBookings.Location = new System.Drawing.Point(250, 0);
+            this.btnBookings.Name = "btnBookings";
+            this.btnBookings.Size = new System.Drawing.Size(96, 39);
+            this.btnBookings.TabIndex = 2;
+            this.btnBookings.Text = "Booking";
+            this.btnBookings.UseVisualStyleBackColor = true;
+            this.btnBookings.Click += new System.EventHandler(this.btnBookings_Click);
+            // 
+            // btnManageRooms
+            // 
+            this.btnManageRooms.Font = new System.Drawing.Font("Loben Variable Trial Light", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnManageRooms.Location = new System.Drawing.Point(154, 0);
+            this.btnManageRooms.Name = "btnManageRooms";
+            this.btnManageRooms.Size = new System.Drawing.Size(91, 39);
+            this.btnManageRooms.TabIndex = 1;
+            this.btnManageRooms.Text = "Rooms";
+            this.btnManageRooms.UseVisualStyleBackColor = true;
+            this.btnManageRooms.Click += new System.EventHandler(this.btnManageRooms_Click);
+            // 
+            // btnDashboard
+            // 
+            this.btnDashboard.Font = new System.Drawing.Font("Loben Variable Trial Light", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDashboard.Location = new System.Drawing.Point(43, 0);
+            this.btnDashboard.Name = "btnDashboard";
+            this.btnDashboard.Size = new System.Drawing.Size(107, 39);
+            this.btnDashboard.TabIndex = 0;
+            this.btnDashboard.Text = "Dashboard";
+            this.btnDashboard.UseVisualStyleBackColor = true;
+            this.btnDashboard.Click += new System.EventHandler(this.btnDashboard_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.AntiqueWhite;
             this.ClientSize = new System.Drawing.Size(818, 370);
+            this.Controls.Add(this.grpQuickActions);
             this.Controls.Add(this.pnlGuests);
             this.Controls.Add(this.pnlMaintenance);
             this.Controls.Add(this.pnlOccupied);
             this.Controls.Add(this.pnlAvailable);
             this.Controls.Add(this.dashboard);
-            this.Controls.Add(this.grpQuickActions);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Dashboard";
             this.Load += new System.EventHandler(this.FormMain_Load);
-            this.grpQuickActions.ResumeLayout(false);
             this.pnlAvailable.ResumeLayout(false);
             this.pnlAvailable.PerformLayout();
             this.pnlOccupied.ResumeLayout(false);
@@ -282,20 +270,14 @@
             this.pnlMaintenance.PerformLayout();
             this.pnlGuests.ResumeLayout(false);
             this.pnlGuests.PerformLayout();
+            this.grpQuickActions.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel grpQuickActions;
         private System.Windows.Forms.Label dashboard;
-        private System.Windows.Forms.Button btnDashboard;
-        private System.Windows.Forms.Button btnLogout;
-        private System.Windows.Forms.Button btnGuests;
-        private System.Windows.Forms.Button btnBookings;
-        private System.Windows.Forms.Button btnManageRooms;
         private System.Windows.Forms.Panel pnlAvailable;
         private System.Windows.Forms.Label lblAvailableCount;
         private System.Windows.Forms.Label label1;
@@ -308,5 +290,10 @@
         private System.Windows.Forms.Panel pnlGuests;
         private System.Windows.Forms.Label lblGuestCount;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Panel grpQuickActions;
+        private System.Windows.Forms.Button btnLogout;
+        private System.Windows.Forms.Button btnBookings;
+        private System.Windows.Forms.Button btnManageRooms;
+        private System.Windows.Forms.Button btnDashboard;
     }
 }

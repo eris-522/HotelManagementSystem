@@ -325,5 +325,25 @@ namespace HotelManagementSystem
         {
             ClearInputControls();
         }
+
+        private void btnDashboard_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnManageRooms_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnBookings_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -47,7 +47,12 @@ namespace HotelManagementSystem
                 MessageBox.Show("Could not initialize dashboard parameters: " + ex.Message);
             }
         }
-
+        private void btnDashboard_Click(object sender, EventArgs e)
+        {
+            FormMain dashboardForm = new FormMain(loggedInUser, userRole);
+            dashboardForm.ShowDialog();
+            LoadDashboardStats(); // Refresh dashboard counts after dialog returns
+        }
 
         private void btnManageRooms_Click(object sender, EventArgs e)
         {
@@ -63,11 +68,6 @@ namespace HotelManagementSystem
             LoadDashboardStats(); // Refresh dashboard counts
         }
 
-        private void btnGuests_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnLogout_Click(object sender, EventArgs e)
         {
             DialogResult dialog = MessageBox.Show("Are you sure you want to log out of the system?",
@@ -80,5 +80,7 @@ namespace HotelManagementSystem
             }
 
         }
+
+        
     }
 }

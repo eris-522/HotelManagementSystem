@@ -32,7 +32,6 @@
             this.rooms = new System.Windows.Forms.Label();
             this.grpQuickActions = new System.Windows.Forms.Panel();
             this.btnLogout = new System.Windows.Forms.Button();
-            this.btnGuests = new System.Windows.Forms.Button();
             this.btnBookings = new System.Windows.Forms.Button();
             this.btnManageRooms = new System.Windows.Forms.Button();
             this.btnDashboard = new System.Windows.Forms.Button();
@@ -75,36 +74,26 @@
             // 
             this.grpQuickActions.BackColor = System.Drawing.Color.AntiqueWhite;
             this.grpQuickActions.Controls.Add(this.btnLogout);
-            this.grpQuickActions.Controls.Add(this.btnGuests);
             this.grpQuickActions.Controls.Add(this.btnBookings);
             this.grpQuickActions.Controls.Add(this.btnManageRooms);
             this.grpQuickActions.Controls.Add(this.btnDashboard);
             this.grpQuickActions.Font = new System.Drawing.Font("Loben Variable Trial Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpQuickActions.Location = new System.Drawing.Point(262, 44);
+            this.grpQuickActions.Location = new System.Drawing.Point(350, 44);
             this.grpQuickActions.Name = "grpQuickActions";
-            this.grpQuickActions.Size = new System.Drawing.Size(532, 39);
+            this.grpQuickActions.Size = new System.Drawing.Size(444, 39);
             this.grpQuickActions.TabIndex = 2;
             // 
             // btnLogout
             // 
             this.btnLogout.Font = new System.Drawing.Font("Loben Variable Trial Light", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLogout.ForeColor = System.Drawing.Color.Maroon;
-            this.btnLogout.Location = new System.Drawing.Point(441, 0);
+            this.btnLogout.Location = new System.Drawing.Point(352, 0);
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.Size = new System.Drawing.Size(86, 39);
             this.btnLogout.TabIndex = 4;
             this.btnLogout.Text = "Logout";
             this.btnLogout.UseVisualStyleBackColor = true;
-            // 
-            // btnGuests
-            // 
-            this.btnGuests.Font = new System.Drawing.Font("Loben Variable Trial Light", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGuests.Location = new System.Drawing.Point(351, 0);
-            this.btnGuests.Name = "btnGuests";
-            this.btnGuests.Size = new System.Drawing.Size(86, 39);
-            this.btnGuests.TabIndex = 3;
-            this.btnGuests.Text = "Guests";
-            this.btnGuests.UseVisualStyleBackColor = true;
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
             // 
             // btnBookings
             // 
@@ -115,6 +104,7 @@
             this.btnBookings.TabIndex = 2;
             this.btnBookings.Text = "Booking";
             this.btnBookings.UseVisualStyleBackColor = true;
+            this.btnBookings.Click += new System.EventHandler(this.btnBookings_Click);
             // 
             // btnManageRooms
             // 
@@ -125,6 +115,7 @@
             this.btnManageRooms.TabIndex = 1;
             this.btnManageRooms.Text = "Rooms";
             this.btnManageRooms.UseVisualStyleBackColor = true;
+            this.btnManageRooms.Click += new System.EventHandler(this.btnManageRooms_Click);
             // 
             // btnDashboard
             // 
@@ -135,6 +126,7 @@
             this.btnDashboard.TabIndex = 0;
             this.btnDashboard.Text = "Dashboard";
             this.btnDashboard.UseVisualStyleBackColor = true;
+            this.btnDashboard.Click += new System.EventHandler(this.btnDashboard_Click);
             // 
             // groupBox1
             // 
@@ -347,7 +339,6 @@
         private System.Windows.Forms.Label rooms;
         private System.Windows.Forms.Panel grpQuickActions;
         private System.Windows.Forms.Button btnLogout;
-        private System.Windows.Forms.Button btnGuests;
         private System.Windows.Forms.Button btnBookings;
         private System.Windows.Forms.Button btnManageRooms;
         private System.Windows.Forms.Button btnDashboard;
