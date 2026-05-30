@@ -14,6 +14,7 @@ namespace HotelManagementSystem
     {
         private string loggedInUser;
         private string userRole;
+        private Form activeForm = null;
 
         public FormMain(string username, string role)
         {
@@ -25,6 +26,23 @@ namespace HotelManagementSystem
         private void FormMain_Load(object sender, EventArgs e)
         {
             LoadDashboardStats();
+        }
+        private void OpenChildForm(Form childForm)
+        {
+            if (activeForm != null)
+            {
+                activeForm.Close();
+            }
+
+            activeForm = childForm;
+            childForm.TopLevel = false;
+            childForm.FormBorderStyle = FormBorderStyle.None;
+            childForm.Dock = DockStyle.Fill;
+
+            pnlContent.Controls.Add(childForm);
+            pnlContent.Tag = childForm;
+            childForm.BringToFront();
+            childForm.Show();
         }
 
         private void LoadDashboardStats()
@@ -49,33 +67,34 @@ namespace HotelManagementSystem
         }
         private void btnDashboard_Click(object sender, EventArgs e)
         {
-            FormMain dashboardForm = new FormMain(loggedInUser, userRole);
-            dashboardForm.ShowDialog();
-            LoadDashboardStats(); // Refresh dashboard counts after dialog returns
+            if (activeForm != null)
+            {
+                activeForm.Close();
+                activeForm = null;
+            }
+            LoadDashboardStats();
         }
 
         private void btnManageRooms_Click(object sender, EventArgs e)
         {
-            FormRoomManagement roomForm = new FormRoomManagement();
-            roomForm.ShowDialog();
-            LoadDashboardStats(); // Refresh status after dialog returns
+            OpenChildForm(new FormRoomManagement());
         }
 
         private void btnBookings_Click(object sender, EventArgs e)
         {
-            FormBooking bookingForm = new FormBooking();
-            bookingForm.ShowDialog();
-            LoadDashboardStats(); // Refresh dashboard counts
+            OpenChildForm(new FormBooking());
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
             DialogResult dialog = MessageBox.Show("Are you sure you want to log out of the system?",
                 "Grand Palace Hotel", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
             if (dialog == DialogResult.Yes)
             {
                 this.Hide();
                 FormLogin login = new FormLogin();
+                login.FormClosed += (s, args) => this.Close();
                 login.Show();
             }
 
