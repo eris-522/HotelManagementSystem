@@ -104,6 +104,7 @@
             this.btnBookings.TabIndex = 2;
             this.btnBookings.Text = "Booking";
             this.btnBookings.UseVisualStyleBackColor = true;
+            this.btnBookings.Click += new System.EventHandler(this.btnBookings_Click);
             // 
             // btnManageRooms
             // 
@@ -114,6 +115,7 @@
             this.btnManageRooms.TabIndex = 1;
             this.btnManageRooms.Text = "Rooms";
             this.btnManageRooms.UseVisualStyleBackColor = true;
+            this.btnManageRooms.Click += new System.EventHandler(this.btnManageRooms_Click);
             // 
             // btnDashboard
             // 
@@ -124,6 +126,7 @@
             this.btnDashboard.TabIndex = 0;
             this.btnDashboard.Text = "Dashboard";
             this.btnDashboard.UseVisualStyleBackColor = true;
+            this.btnDashboard.Click += new System.EventHandler(this.btnDashboard_Click);
             // 
             // groupBox1
             // 

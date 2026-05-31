@@ -326,14 +326,38 @@ namespace HotelManagementSystem
             ClearInputControls();
         }
 
+        private void btnDashboard_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            FormMain frmMain = new FormMain(UserSession.Username, UserSession.Role);
+            frmMain.FormClosed += (s, args) => this.Close();
+            frmMain.Show();
+        }
+
+        private void btnManageRooms_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnBookings_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            FormBooking frmBooking = new FormBooking();
+            frmBooking.FormClosed += (s, args) => this.Close();
+            frmBooking.Show();
+        }
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
             DialogResult dialog = MessageBox.Show("Are you sure you want to log out of the system?",
-                "Grand Palace Hotel", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+        "Grand Palace Hotel", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (dialog == DialogResult.Yes)
             {
+                // Feature: Explicitly flushes session data on logout for security
+                UserSession.Username = null;
+                UserSession.Role = null;
+
                 this.Hide();
                 FormLogin login = new FormLogin();
                 login.FormClosed += (s, args) => this.Close();

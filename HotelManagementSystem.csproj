@@ -123,6 +123,7 @@
     <Compile Include="Microsoft\VisualBasic\Interaction.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserSession.cs" />
     <EmbeddedResource Include="FormBooking.resx">
       <DependentUpon>FormBooking.cs</DependentUpon>
     </EmbeddedResource>
