@@ -14,7 +14,6 @@ namespace HotelManagementSystem
     {
         private string loggedInUser;
         private string userRole;
-        private Form activeForm = null;
 
         public FormMain(string username, string role)
         {
@@ -26,23 +25,6 @@ namespace HotelManagementSystem
         private void FormMain_Load(object sender, EventArgs e)
         {
             LoadDashboardStats();
-        }
-        private void OpenChildForm(Form childForm)
-        {
-            if (activeForm != null)
-            {
-                activeForm.Close();
-            }
-
-            activeForm = childForm;
-            childForm.TopLevel = false;
-            childForm.FormBorderStyle = FormBorderStyle.None;
-            childForm.Dock = DockStyle.Fill;
-
-            pnlContent.Controls.Add(childForm);
-            pnlContent.Tag = childForm;
-            childForm.BringToFront();
-            childForm.Show();
         }
 
         private void LoadDashboardStats()
@@ -67,22 +49,17 @@ namespace HotelManagementSystem
         }
         private void btnDashboard_Click(object sender, EventArgs e)
         {
-            if (activeForm != null)
-            {
-                activeForm.Close();
-                activeForm = null;
-            }
-            LoadDashboardStats();
+
         }
 
         private void btnManageRooms_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new FormRoomManagement());
+            
         }
 
         private void btnBookings_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new FormBooking());
+            
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
