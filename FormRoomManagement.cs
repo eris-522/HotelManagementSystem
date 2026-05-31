@@ -17,7 +17,6 @@ namespace HotelManagementSystem
 {
     public partial class FormRoomManagement : Form
     {
-        private Form activeForm = null;
         private ErrorProvider errorProvider = new ErrorProvider();
 
         // Initializes the form components and attaches event handlers for real-time validation
@@ -124,24 +123,6 @@ namespace HotelManagementSystem
             InitializeComboBoxes();
             LoadRoomsGrid();
             ClearInputControls();
-        }
-
-        private void OpenChildForm(Form childForm)
-        {
-            if (activeForm != null)
-            {
-                activeForm.Close();
-            }
-
-            activeForm = childForm;
-            childForm.TopLevel = false;
-            childForm.FormBorderStyle = FormBorderStyle.None;
-            childForm.Dock = DockStyle.Fill;
-
-            pnlContent.Controls.Add(childForm);
-            pnlContent.Tag = childForm;
-            childForm.BringToFront();
-            childForm.Show();
         }
 
         // Fetches all registered rooms from the database and binds them to the data grid view
@@ -345,20 +326,6 @@ namespace HotelManagementSystem
             ClearInputControls();
         }
 
-        private void btnDashboard_Click(object sender, EventArgs e)
-        {
-            OpenChildForm(new FormMain());
-        }
-
-        private void btnManageRooms_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnBookings_Click(object sender, EventArgs e)
-        {
-            OpenChildForm(new FormBooking());
-        }
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
